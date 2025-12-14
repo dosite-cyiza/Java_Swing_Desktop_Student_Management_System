@@ -10,16 +10,13 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-/**
- * Main GUI class using Java Swing
- * Demonstrates use of 8+ Swing components and complete CRUD functionality
- */
+
 public class StudentManagementGUI extends JFrame {
     
-    // Service layer
+    
     private StudentService studentService;
     
-    // Swing components (MORE THAN 5 REQUIRED)
+
     private JTextField txtFirstName, txtLastName, txtEmail, txtPhone, txtGPA, txtYear;
     private JComboBox<String> comboDepartment;
     private JButton btnAdd, btnUpdate, btnDelete, btnClear, btnLoad;
@@ -41,7 +38,7 @@ public class StudentManagementGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(10, 10));
         
-        // Create panels
+        
         add(createFormPanel(), BorderLayout.NORTH);
         add(createTablePanel(), BorderLayout.CENTER);
         add(createButtonPanel(), BorderLayout.SOUTH);
@@ -59,7 +56,7 @@ public class StudentManagementGUI extends JFrame {
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
-        // Row 0: First Name and Last Name
+        
         gbc.gridx = 0; gbc.gridy = 0;
         panel.add(createLabel("First Name:"), gbc);
         gbc.gridx = 1;
@@ -72,7 +69,7 @@ public class StudentManagementGUI extends JFrame {
         txtLastName = new JTextField(20);
         panel.add(txtLastName, gbc);
         
-        // Row 1: Email and Phone
+
         gbc.gridx = 0; gbc.gridy = 1;
         panel.add(createLabel("Email:"), gbc);
         gbc.gridx = 1;
@@ -80,12 +77,13 @@ public class StudentManagementGUI extends JFrame {
         panel.add(txtEmail, gbc);
         
         gbc.gridx = 2;
-        panel.add(createLabel("Phone (555-0000):"), gbc);
+        panel.add(createLabel("Phone (555-123-4567):"), gbc);
         gbc.gridx = 3;
         txtPhone = new JTextField(20);
         panel.add(txtPhone, gbc);
         
-        // Row 2: Department and Year
+        
+
         gbc.gridx = 0; gbc.gridy = 2;
         panel.add(createLabel("Department:"), gbc);
         gbc.gridx = 1;
@@ -101,7 +99,7 @@ public class StudentManagementGUI extends JFrame {
         txtYear = new JTextField(20);
         panel.add(txtYear, gbc);
         
-        // Row 3: GPA
+        
         gbc.gridx = 0; gbc.gridy = 3;
         panel.add(createLabel("GPA (0.0-4.0):"), gbc);
         gbc.gridx = 1;
@@ -124,11 +122,10 @@ public class StudentManagementGUI extends JFrame {
             "Student Records",
             0, 0, new Font("Arial", Font.BOLD, 14), Color.GREEN.darker()));
         
-        // Table columns
+        
         String[] columns = {"ID", "First Name", "Last Name", "Email", "Phone", 
                            "Department", "Year", "GPA"};
         tableModel = new DefaultTableModel(columns, 0) {
-            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
@@ -140,9 +137,9 @@ public class StudentManagementGUI extends JFrame {
         tableStudents.setRowHeight(25);
         tableStudents.getTableHeader().setFont(new Font("Arial", Font.BOLD, 12));
         tableStudents.getTableHeader().setBackground(new Color(70, 130, 180));
-        tableStudents.getTableHeader().setForeground(Color.WHITE);
+        tableStudents.getTableHeader().setForeground(Color.black);
         
-        // Add selection listener
+
         tableStudents.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
                 selectStudentFromTable();
@@ -159,14 +156,14 @@ public class StudentManagementGUI extends JFrame {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
         panel.setBackground(new Color(245, 245, 245));
         
-        // Create buttons with colors
+
         btnAdd = createButton("Add Student", new Color(46, 204, 113));
         btnUpdate = createButton("Update Student", new Color(52, 152, 219));
         btnDelete = createButton("Delete Student", new Color(231, 76, 60));
         btnClear = createButton("Clear Fields", new Color(149, 165, 166));
         btnLoad = createButton("Reload Data", new Color(241, 196, 15));
         
-        // Add action listeners
+
         btnAdd.addActionListener(e -> addStudent());
         btnUpdate.addActionListener(e -> updateStudent());
         btnDelete.addActionListener(e -> deleteStudent());
@@ -186,7 +183,7 @@ public class StudentManagementGUI extends JFrame {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 12));
         button.setBackground(bgColor);
-        button.setForeground(Color.WHITE);
+        button.setForeground(Color.black);
         button.setFocusPainted(false);
         button.setPreferredSize(new Dimension(140, 35));
         button.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -398,14 +395,15 @@ public class StudentManagementGUI extends JFrame {
         // Validate Phone using RegEx
         if (!ValidationUtil.isValidPhone(txtPhone.getText().trim())) {
             JOptionPane.showMessageDialog(this, 
-                " Invalid phone format!\n" +
-                "Use format: 555-0000\n" +
-                "Example: 555-0101", 
+                "Invalid phone format!\n" +
+                "Use format: 555-123-4567 (10 digits)\n" +
+                "Example: 555-123-4567", 
                 "Validation Error", 
                 JOptionPane.ERROR_MESSAGE);
             txtPhone.requestFocus();
             return false;
         }
+
         
         // Validate Year
         try {
